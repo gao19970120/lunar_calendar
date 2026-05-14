@@ -228,7 +228,6 @@ export class LunarCalendarPadDate extends HTMLElement {
     this.config = {};
     this._hass = null;
     this._timer = null;
-    this._watchdogTimer = null;
     this._midnightTimer = null;
     this._midnightRetryTimer = null;
     this._midnightRetryCount = 0;
@@ -236,7 +235,6 @@ export class LunarCalendarPadDate extends HTMLElement {
     this._lastSecond = "";
     this._lastShichen = "";
     this._lastTickAt = 0;
-    this._watchdogFailures = 0;
     this._lastLunarStamp = "";
     this._filterValue = "0deg";
     this._nodes = {};
@@ -270,14 +268,12 @@ export class LunarCalendarPadDate extends HTMLElement {
     if (!this.shadowRoot.innerHTML) this._renderShell();
     this._updateTime(true);
     this._startClock();
-    this._startWatchdog();
     document.addEventListener("visibilitychange", this._handleVisibilityChange);
     this._scheduleMidnightRefresh();
   }
 
   disconnectedCallback() {
     this._stopClock();
-    this._stopWatchdog();
     document.removeEventListener("visibilitychange", this._handleVisibilityChange);
     if (this._midnightTimer) {
       window.clearTimeout(this._midnightTimer);
@@ -604,58 +600,6 @@ export class LunarCalendarPadDate extends HTMLElement {
       this._updateTime();
       this._scheduleNextTick();
     }, delay);
-  }
-
-  _startWatchdog() {
-    if (this._watchdogTimer) return;
-    this._watchdogFailures = 0;
-    this._watchdogTimer = window.setInterval(() => this._runWatchdog(), 25000);
-  }
-
-  _stopWatchdog() {
-    if (this._watchdogTimer) {
-      window.clearInterval(this._watchdogTimer);
-      this._watchdogTimer = null;
-    }
-    this._watchdogFailures = 0;
-  }
-
-  _runWatchdog() {
-    if (!this.isConnected || document.visibilityState === "hidden") return;
-    const card = this._nodes.card;
-    const rect = card?.getBoundingClientRect?.();
-    const style = card ? getComputedStyle(card) : null;
-    const staleClock = this._lastTickAt && Date.now() - this._lastTickAt > 4000;
-    const badRender =
-      !card ||
-      !rect ||
-      rect.width < 180 ||
-      rect.height < 100 ||
-      rect.top < -20 ||
-      rect.left < -20 ||
-      style?.display === "none" ||
-      style?.visibility === "hidden" ||
-      style?.opacity === "0";
-    if (!badRender && !staleClock) {
-      this._watchdogFailures = 0;
-      return;
-    }
-    this._watchdogFailures += 1;
-    if (this._watchdogFailures >= 2) this._reloadOnce("lunar-calendar-pad-watchdog");
-  }
-
-  _reloadOnce(reason) {
-    const key = "xiaoshi_lunar_calendar_pad_reload_at";
-    const now = Date.now();
-    try {
-      const last = Number(sessionStorage.getItem(key) || 0);
-      if (last && now - last < 10 * 60 * 1000) return;
-      sessionStorage.setItem(key, String(now));
-      sessionStorage.setItem("xiaoshi_lunar_calendar_pad_reload_reason", reason);
-    } catch (e) {
-      // Ignore storage failures and still try the safest recovery path.
-    }
-    window.location.reload();
   }
 
   _updateLunar() {

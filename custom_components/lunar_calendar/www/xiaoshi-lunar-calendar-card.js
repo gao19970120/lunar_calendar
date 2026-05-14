@@ -4,7 +4,7 @@ const loadCards  = async () => {
   await import('./xiaoshi-lunar-calendar.js');
   await import('./xiaoshi-lunar-calendar-phone.js');
   await import('./xiaoshi-lunar-calendar-module.js');
-  await import('./xiaoshi-lunar-calendar-pad.js?v=20260514-dategap-8px');
+  await import('./xiaoshi-lunar-calendar-pad.js?v=20260514-no-watchdog-reload');
   await import('./xiaoshi-birthday-card.js');
   
   window.customCards = window.customCards || [];
