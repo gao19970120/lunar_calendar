@@ -1,10 +1,10 @@
-console.info("%c 消逝卡-万年历 \n%c        v 3.2 ", "color: red; font-weight: bold; background: black", "color: white; font-weight: bold; background: black");
+console.info("%c 消逝卡-万年历 \n%c        v 3.8 ", "color: red; font-weight: bold; background: black", "color: white; font-weight: bold; background: black");
 
 const loadCards  = async () => {
   await import('./xiaoshi-lunar-calendar.js');
   await import('./xiaoshi-lunar-calendar-phone.js');
   await import('./xiaoshi-lunar-calendar-module.js');
-  await import('./xiaoshi-lunar-calendar-pad.js?v=20260514-no-watchdog-reload');
+  await import('./xiaoshi-lunar-calendar-pad.js?v=20260524-upstream-sync-native-popup');
   await import('./xiaoshi-birthday-card.js');
   
   window.customCards = window.customCards || [];

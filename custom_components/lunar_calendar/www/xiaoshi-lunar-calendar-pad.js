@@ -12,7 +12,7 @@ export class LunarCalendarPad extends LitElement {
     this.config = {
       lunar: config?.lunar || 'sensor.lunar_calendar',
       theme: config?.theme || 'on',
-      width: config?.width || '780px',
+      width: config?.width || '785px',
       height: config?.height || '540px',
       date: config?.date || 'date.lunar_tap_date',
       ...config
@@ -36,7 +36,7 @@ export class LunarCalendarPad extends LitElement {
           "left6 body7 right6";
         grid-template-columns: 180px 400px 180px;
         grid-template-rows: 60px 20px 30px 120px 120px 60px 60px;
-        width: 760px;
+        width: 785px;
         height: 540px;
         gap: 10px;
       } 
@@ -222,12 +222,205 @@ export class LunarCalendarPad extends LitElement {
 }
 customElements.define('xiaoshi-lunar-calendar-pad', LunarCalendarPad);
 
+class LunarCalendarPadDateEditor extends LitElement {
+  static get properties() {
+    return {
+      hass: { type: Object },
+      config: { type: Object }
+    };
+  }
+
+  static get styles() {
+    return css`
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      label {
+        font-weight: bold;
+      }
+      select, input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      input[type="color"] {
+        width: 50px;
+        height: 36px;
+        padding: 2px;
+        cursor: pointer;
+      }
+      .conditional-field {
+        display: none;
+      }
+      .conditional-field.visible {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .form-group-inline {
+        flex-direction: row !important;
+        align-items: center;
+        gap: 8px;
+      }
+      .form-group-inline label {
+        white-space: nowrap;
+      }
+      .entity-search-container {
+        position: relative;
+        width: 100%;
+      }
+      .entity-search-container input {
+        width: 100%;
+        min-width: 200px;
+      }
+    `;
+  }
+
+  render() {
+    return html`
+      <div class="form">
+        <div class="form-group">
+          <label>农历实体</label>
+          <div class="entity-search-container">
+            <input
+              type="text"
+              .value=${this.config.entity || ''}
+              @input=${this._onEntityInput}
+              @change=${this._valueChanged}
+              name="entity"
+              placeholder="搜索农历实体（如 sensor.lunar_calendar）"
+              list="lunar-entities"
+            />
+            <datalist id="lunar-entities">
+              ${Object.keys(this.hass.states)
+                .filter((entityId) => entityId.startsWith('sensor'))
+                .map((entityId) => html`
+                  <option value="${entityId}">
+                    ${this.hass.states[entityId].attributes.friendly_name || entityId}
+                  </option>
+                `)}
+            </datalist>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>时钟模式</label>
+          <select @change=${this._valueChanged} .value=${this.config.mode || 'A'} name="mode">
+            <option value="A">A - 普通时钟</option>
+            <option value="B">B - 翻页时钟</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>主题</label>
+          <select @change=${this._valueChanged} .value=${this.config.theme || 'off'} name="theme">
+            <option value="on">on - 白色字体、亮色弹窗背景</option>
+            <option value="off">off - 白色字体、暗色弹窗背景</option>
+          </select>
+          <span style="font-size:12px;color:#888;">也可引用全局函数：[[[ return theme() ]]]</span>
+        </div>
+
+        <div class="form-group form-group-inline conditional-field ${(this.config.mode === 'B') ? 'visible' : ''}" id="theme-on-group">
+          <label>翻页时钟浅色背景色</label>
+          <input type="color" .value=${this.config.theme_on || '#782828'} @change=${this._valueChanged} name="theme_on" />
+        </div>
+
+        <div class="form-group form-group-inline conditional-field ${(this.config.mode === 'B') ? 'visible' : ''}" id="theme-off-group">
+          <label>翻页时钟深色背景色</label>
+          <input type="color" .value=${this.config.theme_off || '#323232'} @change=${this._valueChanged} name="theme_off" />
+        </div>
+
+        <div class="form-group conditional-field ${(this.config.mode === 'B') ? 'visible' : ''}" id="filter-group">
+          <label>色相实体</label>
+          <div class="entity-search-container">
+            <input
+              type="text"
+              .value=${this.config.filter || ''}
+              @input=${this._onFilterEntityInput}
+              @change=${this._valueChanged}
+              name="filter"
+              placeholder="搜索实体（如 number.pad）"
+              list="filter-entities"
+            />
+            <datalist id="filter-entities">
+              ${Object.keys(this.hass.states).map((entityId) => html`
+                <option value="${entityId}">
+                  ${this.hass.states[entityId].attributes.friendly_name || entityId}
+                </option>
+              `)}
+            </datalist>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  _valueChanged(e) {
+    const { name, value } = e.target;
+    if (!value && name !== 'filter' && name !== 'theme_on' && name !== 'theme_off') return;
+    this.config = {
+      ...this.config,
+      [name]: value
+    };
+    if (name === 'mode') {
+      setTimeout(() => this._updateConditionalFields(), 0);
+    }
+    this.dispatchEvent(new CustomEvent('config-changed', {
+      detail: { config: this.config },
+      bubbles: true,
+      composed: true
+    }));
+  }
+
+  _updateConditionalFields() {
+    const isFlip = this.config.mode === 'B';
+    ['theme-on-group', 'theme-off-group', 'filter-group'].forEach((id) => {
+      const el = this.shadowRoot?.getElementById(id);
+      if (el) el.classList.toggle('visible', isFlip);
+    });
+  }
+
+  _onEntityInput(e) {
+    this.config = {
+      ...this.config,
+      entity: e.target.value
+    };
+  }
+
+  _onFilterEntityInput(e) {
+    this.config = {
+      ...this.config,
+      filter: e.target.value
+    };
+  }
+
+  setConfig(config) {
+    this.config = config;
+    setTimeout(() => this._updateConditionalFields(), 0);
+  }
+}
+customElements.define('xiaoshi-lunar-calendar-pad-date-editor', LunarCalendarPadDateEditor);
+
 export class LunarCalendarPadDate extends HTMLElement {
+  static getConfigElement() {
+    return document.createElement("xiaoshi-lunar-calendar-pad-date-editor");
+  }
+
   constructor() {
     super();
     this.config = {};
     this._hass = null;
     this._timer = null;
+    this._watchdogTimer = null;
     this._midnightTimer = null;
     this._midnightRetryTimer = null;
     this._midnightRetryCount = 0;
@@ -235,9 +428,17 @@ export class LunarCalendarPadDate extends HTMLElement {
     this._lastSecond = "";
     this._lastShichen = "";
     this._lastTickAt = 0;
+    this._watchdogFailures = 0;
     this._lastLunarStamp = "";
     this._filterValue = "0deg";
     this._nodes = {};
+    this._popupHassUnsubscribe = null;
+    this._popupUpdatePending = false;
+    this._popupHass = null;
+    this._popupOverlay = null;
+    this._popupElement = null;
+    this._popupCardElement = null;
+    this._popupEscHandler = null;
     this._handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
         this._stopClock();
@@ -268,13 +469,16 @@ export class LunarCalendarPadDate extends HTMLElement {
     if (!this.shadowRoot.innerHTML) this._renderShell();
     this._updateTime(true);
     this._startClock();
+    this._startWatchdog();
     document.addEventListener("visibilitychange", this._handleVisibilityChange);
     this._scheduleMidnightRefresh();
   }
 
   disconnectedCallback() {
     this._stopClock();
+    this._stopWatchdog();
     document.removeEventListener("visibilitychange", this._handleVisibilityChange);
+    this._closePopup();
     if (this._midnightTimer) {
       window.clearTimeout(this._midnightTimer);
       this._midnightTimer = null;
@@ -602,6 +806,58 @@ export class LunarCalendarPadDate extends HTMLElement {
     }, delay);
   }
 
+  _startWatchdog() {
+    if (this._watchdogTimer) return;
+    this._watchdogFailures = 0;
+    this._watchdogTimer = window.setInterval(() => this._runWatchdog(), 25000);
+  }
+
+  _stopWatchdog() {
+    if (this._watchdogTimer) {
+      window.clearInterval(this._watchdogTimer);
+      this._watchdogTimer = null;
+    }
+    this._watchdogFailures = 0;
+  }
+
+  _runWatchdog() {
+    if (!this.isConnected || document.visibilityState === "hidden") return;
+    const card = this._nodes.card;
+    const rect = card?.getBoundingClientRect?.();
+    const style = card ? getComputedStyle(card) : null;
+    const staleClock = this._lastTickAt && Date.now() - this._lastTickAt > 4000;
+    const badRender =
+      !card ||
+      !rect ||
+      rect.width < 180 ||
+      rect.height < 100 ||
+      rect.top < -20 ||
+      rect.left < -20 ||
+      style?.display === "none" ||
+      style?.visibility === "hidden" ||
+      style?.opacity === "0";
+    if (!badRender && !staleClock) {
+      this._watchdogFailures = 0;
+      return;
+    }
+    this._watchdogFailures += 1;
+    if (this._watchdogFailures >= 2) this._reloadOnce("lunar-calendar-pad-watchdog");
+  }
+
+  _reloadOnce(reason) {
+    const key = "xiaoshi_lunar_calendar_pad_reload_at";
+    const now = Date.now();
+    try {
+      const last = Number(sessionStorage.getItem(key) || 0);
+      if (last && now - last < 10 * 60 * 1000) return;
+      sessionStorage.setItem(key, String(now));
+      sessionStorage.setItem("xiaoshi_lunar_calendar_pad_reload_reason", reason);
+    } catch (e) {
+      // Ignore storage failures and still try the safest recovery path.
+    }
+    window.location.reload();
+  }
+
   _updateLunar() {
     this._setText("date", this._getAttribute(this._lunarState, "今天的阳历日期.日期1"));
     this._setText("week", this._getAttribute(this._lunarState, "今天的阳历日期.星期1"));
@@ -707,82 +963,164 @@ export class LunarCalendarPadDate extends HTMLElement {
     this.dispatchEvent(hapticEvent);
   }
 
+  _injectPopupStyles() {
+    if (LunarCalendarPadDate._stylesInjected) return;
+    LunarCalendarPadDate._stylesInjected = true;
+    const style = document.createElement("style");
+    style.id = "xiaoshi-pad-popup-style";
+    style.textContent = `
+      @keyframes xiaoshiPadPopupIn {
+        from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+        to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   _showPopup() {
     this._handleClick();
-    const popupContent = this.config.popup_content || {
-      type: "custom:xiaoshi-lunar-calendar-pad",
-      theme: this._evaluateTheme(),
-    };
-    const surface = this.config.popup_surface || "rgba(150,150,150,0.5)";
-    const scrim = this.config.popup_scrim || "rgba(0,0,0,0.35)";
-    const blur = this.config.popup_backdrop_filter || "blur(10px) brightness(1)";
-    const popupStyle =
-      this.config.popup_style ||
-      `
-    --popup-min-width: 800px;
-    --ha-dialog-scrim-backdrop-filter: ${blur};
-    --mdc-dialog-scrim-color: ${scrim};
-    ha-dialog{
-      --dialog-content-position: unset;
-      --ha-dialog-surface-background: ${surface};
-      --ha-card-background: ${surface};
-      --card-background-color: ${surface};
+    this._injectPopupStyles();
+    const theme = this._evaluateTheme();
+    const haRoot = document.querySelector("home-assistant");
+    const hassObj = haRoot?.hass || haRoot?.shadowRoot?.querySelector("home-assistant-main")?.hass;
+    if (!hassObj) {
+      console.error("[LunarCalendarPadDate] Unable to resolve hass for popup");
+      return;
     }
-  `;
-    const payload = {
-      style: popupStyle,
-      content: popupContent,
-      uix: {
-        style: {
-          "ha-dialog $ wa-dialog $:": `
-          dialog {
-            background: ${surface} !important;
-            border: 0 !important;
-          }
-          dialog::backdrop {
-            background: ${scrim} !important;
-            backdrop-filter: ${blur} !important;
-            -webkit-backdrop-filter: ${blur} !important;
-          }
-        `,
-        },
-      },
+
+    if (this._popupOverlay) {
+      this._closePopup();
+    }
+
+    const overlay = document.createElement("div");
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      pointer-events: auto;
+    `;
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) this._closePopup();
+    });
+
+    const popup = document.createElement("div");
+    popup.style.cssText = `
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1005;
+      background: transparent;
+      padding: 0;
+      max-width: 100vw;
+      max-height: 100vh;
+      overflow: hidden;
+      box-sizing: border-box;
+      animation: xiaoshiPadPopupIn 0.2s ease-out;
+    `;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+
+    this._popupOverlay = overlay;
+    this._popupElement = popup;
+
+    const cardConfig = this.config.popup_content || {
+      type: "custom:xiaoshi-lunar-calendar-pad",
+      theme,
     };
+    this._createPopupCard(popup, cardConfig, hassObj);
+
+    this._popupEscHandler = (event) => {
+      if (event.key === "Escape") this._closePopup();
+    };
+    window.addEventListener("keydown", this._popupEscHandler);
+  }
+
+  async _createPopupCard(container, cardConfig, hassObj) {
     try {
-      window.browser_mod?.service?.("popup", payload);
-    } catch (e) {
-      try {
-        window.browser_mod?.service?.("popup", { style: popupStyle, content: popupContent });
-        setTimeout(() => this._patchPopupSurface(surface, scrim, blur), 60);
-      } catch (e2) {
-        console.warn("Popup failed:", e2);
+      const helpers = await window.loadCardHelpers?.();
+      if (!helpers) {
+        container.innerHTML = '<div style="color:red;padding:20px;">loadCardHelpers unavailable</div>';
+        return;
       }
+      const cardElement = await helpers.createCardElement(cardConfig);
+      cardElement.hass = hassObj;
+      container.appendChild(cardElement);
+      this._popupCardElement = cardElement;
+      this._startPopupHassWatcher(hassObj);
+    } catch (error) {
+      console.error("[LunarCalendarPadDate] Popup card creation failed:", error);
+      container.innerHTML = `<div style="color:red;padding:20px;">加载失败: ${error.message}</div>`;
     }
   }
 
-  _patchPopupSurface(surface, scrim, blur) {
-    const dialogs = Array.from(document.querySelectorAll("ha-dialog"));
-    const haDialog = dialogs[dialogs.length - 1];
-    if (!haDialog) return;
-    const sr1 = haDialog.shadowRoot;
-    const wa = sr1 && sr1.querySelector("wa-dialog");
-    const sr2 = wa && wa.shadowRoot;
-    const dlg = sr2 && sr2.querySelector("dialog");
-    if (!dlg) return;
-    dlg.style.background = surface;
-    dlg.style.border = "0";
-    const styleId = "xiaoshi-popup-backdrop-style";
-    if (sr2 && !sr2.querySelector(`#${styleId}`)) {
-      const st = document.createElement("style");
-      st.id = styleId;
-      st.textContent = `
-      dialog::backdrop {
-        background: ${scrim} !important;
-        backdrop-filter: ${blur} !important;
-        -webkit-backdrop-filter: ${blur} !important;
-      }
-    `;
-      sr2.appendChild(st);
+  _closePopup() {
+    if (this._popupOverlay) {
+      this._popupOverlay.remove();
+      this._popupOverlay = null;
+    }
+    if (this._popupElement) {
+      this._popupElement.remove();
+      this._popupElement = null;
+    }
+    this._popupCardElement = null;
+    if (this._popupEscHandler) {
+      window.removeEventListener("keydown", this._popupEscHandler);
+      this._popupEscHandler = null;
+    }
+    if (this._popupHassUnsubscribe) {
+      this._popupHassUnsubscribe();
+      this._popupHassUnsubscribe = null;
+    }
+    this._popupUpdatePending = false;
+    this._popupHass = null;
+  }
+
+  _startPopupHassWatcher(hassObj) {
+    if (this._popupHassUnsubscribe) return;
+    this._popupHass = hassObj;
+    if (!hassObj || !hassObj.connection) {
+      window.setTimeout(() => this._startPopupHassWatcher(hassObj), 500);
+      return;
+    }
+    try {
+      hassObj.connection.subscribeMessage(
+        () => {
+          if (!this._popupCardElement) return;
+          this._schedulePopupUpdate();
+        },
+        { type: "subscribe_events", event_type: "state_changed" }
+      ).then((unsubscribe) => {
+        this._popupHassUnsubscribe = unsubscribe;
+      });
+    } catch (error) {
+      console.error("[LunarCalendarPadDate] Popup state subscription failed:", error);
+    }
+  }
+
+  _schedulePopupUpdate() {
+    if (this._popupUpdatePending) return;
+    this._popupUpdatePending = true;
+    requestAnimationFrame(() => {
+      this._popupUpdatePending = false;
+      if (!this._popupCardElement) return;
+      const haRoot = document.querySelector("home-assistant");
+      const nextHass = haRoot?.hass || haRoot?.shadowRoot?.querySelector("home-assistant-main")?.hass;
+      if (!nextHass || nextHass === this._popupHass) return;
+      this._popupHass = nextHass;
+      this._updatePopupCard();
+    });
+  }
+
+  _updatePopupCard() {
+    if (!this._popupCardElement || !this._popupHass) return;
+    try {
+      this._popupCardElement.hass = this._popupHass;
+    } catch (error) {
+      console.warn("[LunarCalendarPadDate] Popup card update failed:", error?.message || error);
     }
   }
 }
