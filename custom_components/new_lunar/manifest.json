@@ -1,0 +1,8 @@
+{
+  "domain": "new_lunar",
+  "name": "NEW 万年历卡片",
+  "documentation": "https://github.com/gao19970120/lunar_calendar",
+  "dependencies": [],
+  "codeowners": ["@gao19970120"],
+  "version": "1.0.0"
+}
