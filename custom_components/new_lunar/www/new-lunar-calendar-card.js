@@ -15,16 +15,12 @@ const loadCards = async () => {
   if (!customElements.get('xiaoshi-lunar-calendar-phone-date')) {
     await import('./new-lunar-calendar-phone.js?v=20260606-new-self-contained');
   }
-  if (!customElements.get('xiaoshi-lunar-calendar-pad-date')) {
-    await import('./new-lunar-calendar-pad.js?v=20260606-new-self-contained');
-  }
+  await import('./new-lunar-calendar-pad.js?v=20260606-new-styled-pad');
   if (!customElements.get('xiaoshi-birthday-card')) {
     await import('./new-birthday-card.js?v=20260606-new-self-contained');
   }
 
   defineAlias('new-lunar-calendar', 'xiaoshi-lunar-calendar');
-  defineAlias('new-lunar-calendar-pad', 'xiaoshi-lunar-calendar-pad');
-  defineAlias('new-lunar-calendar-pad-date', 'xiaoshi-lunar-calendar-pad-date');
   defineAlias('new-lunar-calendar-phone', 'xiaoshi-lunar-calendar-phone');
   defineAlias('new-lunar-calendar-phone-date', 'xiaoshi-lunar-calendar-phone-date');
   defineAlias('new-birthday-card', 'xiaoshi-birthday-card');

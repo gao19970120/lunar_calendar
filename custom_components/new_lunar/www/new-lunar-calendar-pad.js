@@ -220,7 +220,7 @@ export class LunarCalendarPad extends LitElement {
     `;
   }
 }
-customElements.define('xiaoshi-lunar-calendar-pad', LunarCalendarPad);
+customElements.define('new-lunar-calendar-pad', LunarCalendarPad);
 
 class LunarCalendarPadDateEditor extends LitElement {
   static get properties() {
@@ -408,11 +408,11 @@ class LunarCalendarPadDateEditor extends LitElement {
     setTimeout(() => this._updateConditionalFields(), 0);
   }
 }
-customElements.define('xiaoshi-lunar-calendar-pad-date-editor', LunarCalendarPadDateEditor);
+customElements.define('new-lunar-calendar-pad-date-editor', LunarCalendarPadDateEditor);
 
 export class LunarCalendarPadDate extends HTMLElement {
   static getConfigElement() {
-    return document.createElement("xiaoshi-lunar-calendar-pad-date-editor");
+    return document.createElement("new-lunar-calendar-pad-date-editor");
   }
 
   constructor() {
@@ -845,13 +845,13 @@ export class LunarCalendarPadDate extends HTMLElement {
   }
 
   _reloadOnce(reason) {
-    const key = "xiaoshi_lunar_calendar_pad_reload_at";
+    const key = "new_lunar_calendar_pad_reload_at";
     const now = Date.now();
     try {
       const last = Number(sessionStorage.getItem(key) || 0);
       if (last && now - last < 10 * 60 * 1000) return;
       sessionStorage.setItem(key, String(now));
-      sessionStorage.setItem("xiaoshi_lunar_calendar_pad_reload_reason", reason);
+      sessionStorage.setItem("new_lunar_calendar_pad_reload_reason", reason);
     } catch (e) {
       // Ignore storage failures and still try the safest recovery path.
     }
@@ -967,9 +967,9 @@ export class LunarCalendarPadDate extends HTMLElement {
     if (LunarCalendarPadDate._stylesInjected) return;
     LunarCalendarPadDate._stylesInjected = true;
     const style = document.createElement("style");
-    style.id = "xiaoshi-pad-popup-style";
+    style.id = "new-pad-popup-style";
     style.textContent = `
-      @keyframes xiaoshiPadPopupIn {
+      @keyframes newPadPopupIn {
         from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
         to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
       }
@@ -1023,7 +1023,7 @@ export class LunarCalendarPadDate extends HTMLElement {
       max-height: 100vh;
       overflow: hidden;
       box-sizing: border-box;
-      animation: xiaoshiPadPopupIn 0.2s ease-out;
+      animation: newPadPopupIn 0.2s ease-out;
     `;
 
     document.body.appendChild(overlay);
@@ -1033,7 +1033,7 @@ export class LunarCalendarPadDate extends HTMLElement {
     this._popupElement = popup;
 
     const cardConfig = this.config.popup_content || {
-      type: "custom:xiaoshi-lunar-calendar-pad",
+      type: "custom:new-lunar-calendar-pad",
       theme,
     };
     this._createPopupCard(popup, cardConfig, hassObj);
@@ -1129,4 +1129,5 @@ export class LunarCalendarPadDate extends HTMLElement {
     }
   }
 }
-customElements.define('xiaoshi-lunar-calendar-pad-date', LunarCalendarPadDate);
+customElements.define('new-lunar-calendar-pad-date', LunarCalendarPadDate);
+
