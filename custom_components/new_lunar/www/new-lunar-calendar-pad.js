@@ -75,152 +75,152 @@ export class LunarCalendarPad extends LitElement {
     return html`
       <div class="grid-container">
         <div class="grid-item head">
-          <new-lunar-calendar-head \n
+          <xiaoshi-lunar-calendar-head \n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-head>
+          </xiaoshi-lunar-calendar-head>
         </div>
 
         <div class="grid-item lunar">
-          <new-lunar-calendar \n
+          <xiaoshi-lunar-calendar \n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight1}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar>
+          </xiaoshi-lunar-calendar>
         </div>
 
         <div class="grid-item body1">
-          <new-lunar-calendar-body1 \n
+          <xiaoshi-lunar-calendar-body1 \n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-body1>
+          </xiaoshi-lunar-calendar-body1>
         </div>
 
         <div class="grid-item body7">
-          <new-lunar-calendar-body7 \n
+          <xiaoshi-lunar-calendar-body7 \n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-body7>
+          </xiaoshi-lunar-calendar-body7>
         </div>
         <div class="grid-item left1">
-          <new-lunar-calendar-left1\n
+          <xiaoshi-lunar-calendar-left1\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight9}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-left1>
+          </xiaoshi-lunar-calendar-left1>
         </div>
         
         <div class="grid-item right1">
-          <new-lunar-calendar-right1\n
+          <xiaoshi-lunar-calendar-right1\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight9}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-right1>
+          </xiaoshi-lunar-calendar-right1>
         </div>
         
         <div class="grid-item left2">
-          <new-lunar-calendar-left2\n
+          <xiaoshi-lunar-calendar-left2\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight3}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-left2>
+          </xiaoshi-lunar-calendar-left2>
         </div>
         
         <div class="grid-item right2">
-          <new-lunar-calendar-right2\n
+          <xiaoshi-lunar-calendar-right2\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight3}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-right2>
+          </xiaoshi-lunar-calendar-right2>
         </div>
         
         <div class="grid-item left3">
-          <new-lunar-calendar-left3\n
+          <xiaoshi-lunar-calendar-left3\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight12}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-left3>
+          </xiaoshi-lunar-calendar-left3>
         </div>
         
         <div class="grid-item right3">
-          <new-lunar-calendar-right3\n
+          <xiaoshi-lunar-calendar-right3\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight12}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-right3>
+          </xiaoshi-lunar-calendar-right3>
         </div>
         
         <div class="grid-item left4">
-          <new-lunar-calendar-left4\n
+          <xiaoshi-lunar-calendar-left4\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight12}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-left4>
+          </xiaoshi-lunar-calendar-left4>
         </div>
         
         <div class="grid-item right4">
-          <new-lunar-calendar-right4\n
+          <xiaoshi-lunar-calendar-right4\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight12}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-right4>
+          </xiaoshi-lunar-calendar-right4>
         </div>
         
         <div class="grid-item left5">
-          <new-lunar-calendar-left5\n
+          <xiaoshi-lunar-calendar-left5\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-left5>
+          </xiaoshi-lunar-calendar-left5>
         </div>
         
         <div class="grid-item right5">
-          <new-lunar-calendar-right5\n
+          <xiaoshi-lunar-calendar-right5\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-right5>
+          </xiaoshi-lunar-calendar-right5>
         </div>
         
         <div class="grid-item left6">
-          <new-lunar-calendar-left6\n
+          <xiaoshi-lunar-calendar-left6\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-left6>
+          </xiaoshi-lunar-calendar-left6>
         </div>
         
         <div class="grid-item right6">
-          <new-lunar-calendar-right6\n
+          <xiaoshi-lunar-calendar-right6\n
             .hass=${this.hass}\n
             .config=${this.config}\n
             .height=${headHeight6}\n
             style="width:100%;height:100%">
-          </new-lunar-calendar-right6>
+          </xiaoshi-lunar-calendar-right6>
         </div>
       </div>
     `;
   }
 }
-customElements.define('new-lunar-calendar-pad', LunarCalendarPad);
+customElements.define('xiaoshi-lunar-calendar-pad', LunarCalendarPad);
 
 class LunarCalendarPadDateEditor extends LitElement {
   static get properties() {
@@ -408,11 +408,11 @@ class LunarCalendarPadDateEditor extends LitElement {
     setTimeout(() => this._updateConditionalFields(), 0);
   }
 }
-customElements.define('new-lunar-calendar-pad-date-editor', LunarCalendarPadDateEditor);
+customElements.define('xiaoshi-lunar-calendar-pad-date-editor', LunarCalendarPadDateEditor);
 
 export class LunarCalendarPadDate extends HTMLElement {
   static getConfigElement() {
-    return document.createElement("new-lunar-calendar-pad-date-editor");
+    return document.createElement("xiaoshi-lunar-calendar-pad-date-editor");
   }
 
   constructor() {
@@ -845,13 +845,13 @@ export class LunarCalendarPadDate extends HTMLElement {
   }
 
   _reloadOnce(reason) {
-    const key = "new_lunar_calendar_pad_reload_at";
+    const key = "xiaoshi_lunar_calendar_pad_reload_at";
     const now = Date.now();
     try {
       const last = Number(sessionStorage.getItem(key) || 0);
       if (last && now - last < 10 * 60 * 1000) return;
       sessionStorage.setItem(key, String(now));
-      sessionStorage.setItem("new_lunar_calendar_pad_reload_reason", reason);
+      sessionStorage.setItem("xiaoshi_lunar_calendar_pad_reload_reason", reason);
     } catch (e) {
       // Ignore storage failures and still try the safest recovery path.
     }
@@ -967,9 +967,9 @@ export class LunarCalendarPadDate extends HTMLElement {
     if (LunarCalendarPadDate._stylesInjected) return;
     LunarCalendarPadDate._stylesInjected = true;
     const style = document.createElement("style");
-    style.id = "new-pad-popup-style";
+    style.id = "xiaoshi-pad-popup-style";
     style.textContent = `
-      @keyframes newPadPopupIn {
+      @keyframes xiaoshiPadPopupIn {
         from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
         to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
       }
@@ -1023,7 +1023,7 @@ export class LunarCalendarPadDate extends HTMLElement {
       max-height: 100vh;
       overflow: hidden;
       box-sizing: border-box;
-      animation: newPadPopupIn 0.2s ease-out;
+      animation: xiaoshiPadPopupIn 0.2s ease-out;
     `;
 
     document.body.appendChild(overlay);
@@ -1033,7 +1033,7 @@ export class LunarCalendarPadDate extends HTMLElement {
     this._popupElement = popup;
 
     const cardConfig = this.config.popup_content || {
-      type: "custom:new-lunar-calendar-pad",
+      type: "custom:xiaoshi-lunar-calendar-pad",
       theme,
     };
     this._createPopupCard(popup, cardConfig, hassObj);
@@ -1129,5 +1129,4 @@ export class LunarCalendarPadDate extends HTMLElement {
     }
   }
 }
-customElements.define('new-lunar-calendar-pad-date', LunarCalendarPadDate);
-
+customElements.define('xiaoshi-lunar-calendar-pad-date', LunarCalendarPadDate);

@@ -44,73 +44,73 @@ class LunarCalendarPhone extends LitElement {
     
     return html`
       <div class="card-container"\n style="width: ${this.config.width};">
-        <new-lunar-calendar-head \n
+        <xiaoshi-lunar-calendar-head \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${headHeight}>
-        </new-lunar-calendar-head>
+        </xiaoshi-lunar-calendar-head>
         
-        <new-lunar-calendar \n
+        <xiaoshi-lunar-calendar \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${calendarHeight}>
-        </new-lunar-calendar>
+        </xiaoshi-lunar-calendar>
         
-        <new-lunar-calendar-body1 \n
+        <xiaoshi-lunar-calendar-body1 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>
-        </new-lunar-calendar-body1>
+        </xiaoshi-lunar-calendar-body1>
         
-        <new-lunar-calendar-body2 \n
+        <xiaoshi-lunar-calendar-body2 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>
-        </new-lunar-calendar-body2>
+        </xiaoshi-lunar-calendar-body2>
         
-        <new-lunar-calendar-body3 \n
+        <xiaoshi-lunar-calendar-body3 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>
-        </new-lunar-calendar-body3>
+        </xiaoshi-lunar-calendar-body3>
         
-        <new-lunar-calendar-body4 \n
+        <xiaoshi-lunar-calendar-body4 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>
-        </new-lunar-calendar-body4>
+        </xiaoshi-lunar-calendar-body4>
         
-        <new-lunar-calendar-body5 \n
+        <xiaoshi-lunar-calendar-body5 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>
-        </new-lunar-calendar-body5>
+        </xiaoshi-lunar-calendar-body5>
         
-        <new-lunar-calendar-body6 \n
+        <xiaoshi-lunar-calendar-body6 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>
-        </new-lunar-calendar-body6>
+        </xiaoshi-lunar-calendar-body6>
         
-        <new-lunar-calendar-body7 \n
+        <xiaoshi-lunar-calendar-body7 \n
           .hass=${this.hass}\n
           .config=${this.config}\n
           .width=${this.config.width}\n
           .height=${bodyHeight}>\n
-        </new-lunar-calendar-body7>
+        </xiaoshi-lunar-calendar-body7>
       </div>
     `;
   }
 }
-customElements.define('new-lunar-calendar-phone', LunarCalendarPhone);
+customElements.define('xiaoshi-lunar-calendar-phone', LunarCalendarPhone);
 
 class LunarCalendarPhoneDateEditor extends LitElement {
   static get properties() {
@@ -253,7 +253,7 @@ class LunarCalendarPhoneDateEditor extends LitElement {
     this.config = config;
   }
 }
-customElements.define('new-lunar-calendar-phone-date-editor', LunarCalendarPhoneDateEditor);
+customElements.define('xiaoshi-lunar-calendar-phone-date-editor', LunarCalendarPhoneDateEditor);
 
 class LunarCalendarPhoneDate extends LitElement {
   static get properties() {
@@ -274,7 +274,7 @@ class LunarCalendarPhoneDate extends LitElement {
   }
 
   static getConfigElement() {
-    return document.createElement("new-lunar-calendar-phone-date-editor");
+    return document.createElement("xiaoshi-lunar-calendar-phone-date-editor");
   }
 
   setConfig(config) {
@@ -358,17 +358,17 @@ class LunarCalendarPhoneDate extends LitElement {
     if (LunarCalendarPhoneDate._stylesInjected) return;
     LunarCalendarPhoneDate._stylesInjected = true;
     const style = document.createElement('style');
-    style.id = 'new-phone-popup-style';
+    style.id = 'xiaoshi-phone-popup-style';
     style.textContent = `
-      @keyframes newPhonePopupBottom {
+      @keyframes xiaoshiPhonePopupBottom {
         from { opacity: 0; transform: translateX(-50%) translateY(100%); }
         to   { opacity: 1; transform: translateX(-50%) translateY(0); }
       }
-      @keyframes newPhonePopupTop {
+      @keyframes xiaoshiPhonePopupTop {
         from { opacity: 0; transform: translateX(-50%) translateY(-100%); }
         to   { opacity: 1; transform: translateX(-50%) translateY(0); }
       }
-      @keyframes newPhonePopupCenter {
+      @keyframes xiaoshiPhonePopupCenter {
         from { opacity: 0; transform: translateX(-50%) scale(0.9); }
         to   { opacity: 1; transform: translateX(-50%) scale(1); }
       }
@@ -411,8 +411,8 @@ class LunarCalendarPhoneDate extends LitElement {
 
     // 创建弹窗容器
     const anim = this.config.popup_animation || 'bottom';
-    const animNameMap = { bottom: 'newPhonePopupBottom', top: 'newPhonePopupTop', center: 'newPhonePopupCenter' };
-    const animName = animNameMap[anim] || 'newPhonePopupBottom';
+    const animNameMap = { bottom: 'xiaoshiPhonePopupBottom', top: 'xiaoshiPhonePopupTop', center: 'xiaoshiPhonePopupCenter' };
+    const animName = animNameMap[anim] || 'xiaoshiPhonePopupBottom';
     const popup = document.createElement('div');
     popup.style.cssText = `
       position: fixed;
@@ -435,7 +435,7 @@ class LunarCalendarPhoneDate extends LitElement {
 
     // 创建卡片
     const cardConfig = {
-      type: 'custom:new-lunar-calendar-phone',
+      type: 'custom:xiaoshi-lunar-calendar-phone',
       theme: theme
     };
     this._createPopupCard(popup, cardConfig, hassObj);
@@ -555,5 +555,4 @@ class LunarCalendarPhoneDate extends LitElement {
     this._closePopup();
   }
 }
-customElements.define('new-lunar-calendar-phone-date', LunarCalendarPhoneDate);
-
+customElements.define('xiaoshi-lunar-calendar-phone-date', LunarCalendarPhoneDate);
