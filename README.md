@@ -4,6 +4,21 @@ https://github.com/6tail/lunar-python
 
 # 农历万年历
 
+## 当前仓库说明
+这个仓库现在包含两部分内容：
+
+1. `custom_components/lunar_calendar`
+   后端农历集成，保持和主线功能同步。
+2. `custom_components/new_lunar`
+   从旧版前端卡片中独立拆出的万年历卡片资源，专门用于保留自定义平板/手机卡片样式与交互，避免被主线前端覆盖。
+
+`new_lunar` 是一个纯前端资源包，不替代 `lunar_calendar` 的实体与数据来源。  
+也就是说：
+
+- 后端实体继续使用 `sensor.lunar_calendar`
+- 日期实体继续使用 `date.lunar_tap_date`
+- 页面卡片改为引用 `custom:new-*` 系列
+
 ## 功能清单
 1、本地计算，没有api  
 2、万年历：支持年、月无限制翻页  
@@ -20,6 +35,53 @@ https://github.com/6tail/lunar-python
 ## 如何下载
 1、先添加自定义集成 https://github.com/xiaoshi930/lunar_calendar  ，后在HACS中搜索"万年历"，安装此集成，重启Home Assistant  
 2、将 `lunar_calendar` 文件夹复制到你的 Home Assistant 配置目录下的 `custom_components` 文件夹中，重启 Home Assistant
+
+## NEW 独立前端卡片
+如果你希望使用本仓库保留下来的独立前端卡片，而不是主线自带的前端资源，请额外复制：
+
+`custom_components/new_lunar`
+
+并在 Lovelace 资源中加载：
+
+`/config/custom_components/new_lunar/www/new-lunar-calendar-card.js`
+
+### YAML 示例
+
+#### 平板小卡
+~~~
+type: custom:new-lunar-calendar-pad-date
+mode: A
+~~~
+
+#### 平板弹出主卡
+~~~
+type: custom:new-lunar-calendar-pad
+theme: '[[[ return theme() ]]]'
+~~~
+
+#### 手机小卡
+~~~
+type: custom:new-lunar-calendar-phone-date
+theme: '[[[ return theme() ]]]'
+~~~
+
+#### 手机主卡
+~~~
+type: custom:new-lunar-calendar-phone
+theme: '[[[ return theme() ]]]'
+~~~
+
+#### 日历主体
+~~~
+type: custom:new-lunar-calendar
+theme: '[[[ return theme() ]]]'
+~~~
+
+#### 生日卡
+~~~
+type: custom:new-birthday-card
+theme: '[[[ return theme() ]]]'
+~~~
 
 ## 配套UI
 ### 配套UI1：平板端时间显示
