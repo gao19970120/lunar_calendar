@@ -41,9 +41,11 @@ https://github.com/6tail/lunar-python
 
 `custom_components/new_lunar`
 
-并在 Lovelace 资源中加载：
+当前前端资源推荐放到 Home Assistant 的 `www/new_lunar` 目录，并在 Lovelace 资源中加载：
 
-`/config/custom_components/new_lunar/www/new-lunar-calendar-card.js`
+`/local/new_lunar/new-lunar-calendar-card.js`
+
+不要使用 `/config/custom_components/new_lunar/www/...` 作为 Lovelace 资源地址；在部分 Home Assistant 环境中，这个路径会返回 HTML 页面而不是 JavaScript 文件，导致卡片无法注册。
 
 ### YAML 示例
 
