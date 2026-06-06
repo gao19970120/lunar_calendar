@@ -745,7 +745,7 @@ class LunarCalendar extends LitElement {
     this.updateDateEntity();
   }
 }
-customElements.define('new-lunar-calendar', LunarCalendar); 
+customElements.define('xiaoshi-lunar-calendar', LunarCalendar); 
 
 class LunarCalendarHead extends LitElement {
   static get properties() {
@@ -923,7 +923,7 @@ class LunarCalendarHead extends LitElement {
     return moonPhase + (moonPhaseSymbols[moonPhase] || '');
   }
 }
-customElements.define('new-lunar-calendar-head', LunarCalendarHead);
+customElements.define('xiaoshi-lunar-calendar-head', LunarCalendarHead);
 
 class LunarCalendarBody1 extends LitElement {
   static get properties() {
@@ -1081,7 +1081,7 @@ class LunarCalendarBody1 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body1', LunarCalendarBody1);
+customElements.define('xiaoshi-lunar-calendar-body1', LunarCalendarBody1);
 
 class LunarCalendarBody2 extends LitElement {
   static get properties() {
@@ -1210,7 +1210,7 @@ class LunarCalendarBody2 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body2', LunarCalendarBody2);
+customElements.define('xiaoshi-lunar-calendar-body2', LunarCalendarBody2);
 
 class LunarCalendarBody3 extends LitElement {
   static get properties() {
@@ -1343,7 +1343,7 @@ class LunarCalendarBody3 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body3', LunarCalendarBody3);
+customElements.define('xiaoshi-lunar-calendar-body3', LunarCalendarBody3);
 
 class LunarCalendarBody4 extends LitElement {
   static get properties() {
@@ -1462,7 +1462,7 @@ class LunarCalendarBody4 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body4', LunarCalendarBody4);
+customElements.define('xiaoshi-lunar-calendar-body4', LunarCalendarBody4);
 
 class LunarCalendarBody5 extends LitElement {
   static get properties() {
@@ -1581,7 +1581,7 @@ class LunarCalendarBody5 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body5', LunarCalendarBody5);
+customElements.define('xiaoshi-lunar-calendar-body5', LunarCalendarBody5);
 
 class LunarCalendarBody6 extends LitElement {
   static get properties() {
@@ -1703,7 +1703,7 @@ class LunarCalendarBody6 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body6', LunarCalendarBody6);
+customElements.define('xiaoshi-lunar-calendar-body6', LunarCalendarBody6);
 
 class LunarCalendarBody7 extends LitElement {
   static get properties() {
@@ -1858,7 +1858,7 @@ class LunarCalendarBody7 extends LitElement {
     `;
   }
 }
-customElements.define('new-lunar-calendar-body7', LunarCalendarBody7);
+customElements.define('xiaoshi-lunar-calendar-body7', LunarCalendarBody7);
 
 class LunarCalendarLeft1 extends LitElement {
   static get properties() {
@@ -1981,7 +1981,7 @@ class LunarCalendarLeft1 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-left1', LunarCalendarLeft1);
+customElements.define('xiaoshi-lunar-calendar-left1', LunarCalendarLeft1);
 
 class LunarCalendarRight1 extends LitElement {
   static get properties() {
@@ -2099,7 +2099,7 @@ class LunarCalendarRight1 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-right1', LunarCalendarRight1);
+customElements.define('xiaoshi-lunar-calendar-right1', LunarCalendarRight1);
 
 class LunarCalendarLeft2 extends LitElement {
   static get properties() {
@@ -2200,7 +2200,7 @@ class LunarCalendarLeft2 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-left2', LunarCalendarLeft2);
+customElements.define('xiaoshi-lunar-calendar-left2', LunarCalendarLeft2);
 
 class LunarCalendarRight2 extends LitElement {
   static get properties() {
@@ -2301,7 +2301,7 @@ class LunarCalendarRight2 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-right2', LunarCalendarRight2);
+customElements.define('xiaoshi-lunar-calendar-right2', LunarCalendarRight2);
 
 class LunarCalendarLeft3 extends LitElement {
   static get properties() {
@@ -2431,7 +2431,7 @@ class LunarCalendarLeft3 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-left3', LunarCalendarLeft3); 
+customElements.define('xiaoshi-lunar-calendar-left3', LunarCalendarLeft3); 
 
 class LunarCalendarRight3 extends LitElement {
   static get properties() {
@@ -2561,7 +2561,7 @@ class LunarCalendarRight3 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-right3', LunarCalendarRight3); 
+customElements.define('xiaoshi-lunar-calendar-right3', LunarCalendarRight3); 
 
 class LunarCalendarLeft4 extends LitElement {
   static get properties() {
@@ -2687,7 +2687,7 @@ class LunarCalendarLeft4 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-left4', LunarCalendarLeft4); 
+customElements.define('xiaoshi-lunar-calendar-left4', LunarCalendarLeft4); 
 
 class LunarCalendarRight4 extends LitElement {
   static get properties() {
@@ -2813,7 +2813,7 @@ class LunarCalendarRight4 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-right4', LunarCalendarRight4); 
+customElements.define('xiaoshi-lunar-calendar-right4', LunarCalendarRight4); 
 
 class LunarCalendarLeft5 extends LitElement {
   static get properties() {
@@ -2927,7 +2927,7 @@ class LunarCalendarLeft5 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-left5', LunarCalendarLeft5);
+customElements.define('xiaoshi-lunar-calendar-left5', LunarCalendarLeft5);
 
 class LunarCalendarRight5 extends LitElement {
   static get properties() {
@@ -3041,7 +3041,7 @@ class LunarCalendarRight5 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-right5', LunarCalendarRight5);
+customElements.define('xiaoshi-lunar-calendar-right5', LunarCalendarRight5);
 
 class LunarCalendarLeft6 extends LitElement {
   static get properties() {
@@ -3157,7 +3157,7 @@ class LunarCalendarLeft6 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-left6', LunarCalendarLeft6);
+customElements.define('xiaoshi-lunar-calendar-left6', LunarCalendarLeft6);
 
 class LunarCalendarRight6 extends LitElement {
   static get properties() {
@@ -3271,5 +3271,4 @@ class LunarCalendarRight6 extends LitElement {
     `;
   }
 } 
-customElements.define('new-lunar-calendar-right6', LunarCalendarRight6);
-
+customElements.define('xiaoshi-lunar-calendar-right6', LunarCalendarRight6);

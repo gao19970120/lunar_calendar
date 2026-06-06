@@ -9,10 +9,18 @@ const defineAlias = (newTag, baseTag) => {
 };
 
 const loadCards = async () => {
-  await import('/xiaoshi/xiaoshi-lunar/lunar-calendar.js');
-  await import('./new-lunar-calendar-phone.js?v=20260606-new-alias-fix');
-  await import('./new-lunar-calendar-pad.js?v=20260606-new-alias-fix');
-  await import('/xiaoshi/xiaoshi-lunar/birthday-card.js');
+  if (!customElements.get('xiaoshi-lunar-calendar')) {
+    await import('./new-lunar-calendar.js?v=20260606-new-self-contained');
+  }
+  if (!customElements.get('xiaoshi-lunar-calendar-phone-date')) {
+    await import('./new-lunar-calendar-phone.js?v=20260606-new-self-contained');
+  }
+  if (!customElements.get('xiaoshi-lunar-calendar-pad-date')) {
+    await import('./new-lunar-calendar-pad.js?v=20260606-new-self-contained');
+  }
+  if (!customElements.get('xiaoshi-birthday-card')) {
+    await import('./new-birthday-card.js?v=20260606-new-self-contained');
+  }
 
   defineAlias('new-lunar-calendar', 'xiaoshi-lunar-calendar');
   defineAlias('new-lunar-calendar-pad', 'xiaoshi-lunar-calendar-pad');

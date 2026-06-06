@@ -2,9 +2,9 @@ import { LitElement, html, css } from "https://unpkg.com/lit-element@2.4.0/lit-e
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-    type: 'new-birthday-card',
-    name: 'NEW万年历 - 生日信息卡片',
-    description: 'NEW万年历日历 - 生日信息卡片',
+    type: 'xiaoshi-birthday-card',
+    name: '消逝万年历 - 生日信息卡片',
+    description: '消逝万年历日历 - 生日信息卡片',
 	  preview: true
 });
 
@@ -767,7 +767,7 @@ class XiaoshiBirthdayCardEditor extends LitElement {
     this._searchTerm = this.config.entity || 'sensor.lunar_calendar';
   }
 } 
-customElements.define('new-birthday-card-editor', XiaoshiBirthdayCardEditor);
+customElements.define('xiaoshi-birthday-card-editor', XiaoshiBirthdayCardEditor);
 
 class XiaoshiBirthdayCard extends LitElement {
   static get properties() {
@@ -1006,7 +1006,7 @@ class XiaoshiBirthdayCard extends LitElement {
   }
 
   static getConfigElement() {
-    return document.createElement("new-birthday-card-editor");
+    return document.createElement("xiaoshi-birthday-card-editor");
   }
 
   connectedCallback() {
@@ -1274,5 +1274,4 @@ class XiaoshiBirthdayCard extends LitElement {
     return baseSize + entitySize;
   }
 }
-customElements.define('new-birthday-card', XiaoshiBirthdayCard);
-
+customElements.define('xiaoshi-birthday-card', XiaoshiBirthdayCard);
